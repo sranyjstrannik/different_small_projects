@@ -77,14 +77,24 @@ def save_all_posts(api=api, group_id=group_id):
                 attachments = post_example.get('attachments')
                 if attachments:
                     for attached in attachments:
+                        f.write('\n')
                         type_ = attached.get('type')
-                        f.write({'photo':'фотокарточка:',
-                            'audio':'музыкальное сопровождение:',
-                            'link':'ссылка:',
-                            'doc':'документ:',
-                            'video':'видеопленка:',
-                            'poll':'опрос',
-                            'album':'альбом'}[type_])
+                        if type_ == 'audio':
+                            f.write('музыкальное сопровождение: {} - {}'.format(attached['audio']['artist'],
+                                                                                attached['audio']['title']))
+                        elif type_ == 'photo':
+                            f.write('фотокарточка')
+                        elif type_ == 'link':
+                            f.write('ccылка:' + attached['link']['title'] + ':' +
+                                    attached['link']['url'])
+                        elif type_ == 'doc':
+                            f.write('документ:' + attached['doc']['title'])
+                        elif type_ == 'video':
+                            f.write('видеопленка:' + attached['video']['title'])
+                        elif type_ == 'poll':
+                            f.write('опрос:' + attached['poll']['question'])
+                        elif type_ == 'album':
+                            f.write('альбом "' + attached['album']['title'] + '": ' + attached['album']['description'])
 
         time.sleep(1)
         server_answer = api.wall.get(owner_id='-' + str(group_id), count=100, offset=offset)
