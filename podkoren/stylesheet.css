@@ -1,0 +1,17 @@
+tag {
+	color: #000000;
+	font-weight: bold;
+	padding: 4px;
+	border: 1px solid;
+	border-radius: 2px;
+}
+
+big_text {
+
+}
+
+
+.description{
+	color: #ff0000;
+	border: 5px solid;
+}
